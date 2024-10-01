@@ -42,6 +42,28 @@ private:
 };
 
 
+class SampleIntegrator{
+public:
+	//TODO public methods
+	SampleIntegrator(std::shared_ptr<const Camera> camera,
+					std::shared_ptr<Sampler> sampler):
+					camera(camera), sampler(sampler) {}
+
+	virtual void Render(const Scene & scene) = 0; //? reqires implementation in child classes
+
+	virtual void Preprocess (const Scene & scene, Sampler &sampler) {} //? allocating add. data structures, precomputing rough representation and e.t.c.
+
+protected:
+	//TODO protected data
+	std::shared_ptr<const Camera> camera;
+private:
+	//TODO private data
+	//? responsible for chossing points on the image plane which rays are traced,
+	//? and responsible for  supplying the same positions used by integrators for estimating the value of the light transort
+	std::shared_ptr<Sampler> sampler;  
+}; //? rendering image
+
+
 class Primitive{};
 
 class Light{
@@ -53,6 +75,8 @@ class Options{};
 class Bounds3f{};
 class Ray{};
 class SurfaceIntersaction{};
+class Sampler{};
+class Camera{};
 
 void pbrtInit(Options options);
 void pbrtCleanup();
